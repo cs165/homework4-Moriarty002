@@ -9,7 +9,14 @@
 // See HW4 writeup for more hints and details.
 class MusicScreen {
   constructor() {
-    // TODO(you): Implement the constructor and add fields as necessary.
+      this.AudioPlayer=new AudioPlayer();
+      this.GifDisplay=new GifDisplay();
+      this.PlayButton=new PlayButton();
+
+  }
+  Show()
+  {
+
   }
   // TODO(you): Add methods as necessary.
 }
