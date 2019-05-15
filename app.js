@@ -12,11 +12,12 @@ class App {
       formElement.addEventListener('submit',this.Submit);
       document.addEventListener('keydown',this.CheckKey);
 
-
-      var musicElement=null;
-
-      this.MenuScreen = new MenuScreen(formElement);
+      var menuElement=document.querySelector('#menu');
+      var musicElement=document.querySelector('#music');
+      this.MenuScreen = new MenuScreen(menuElement);
       this.MusicScreen = new MusicScreen(musicElement);
+
+      this.MusicScreen.Hide();
   }
     Submit(event)
     {
@@ -32,14 +33,13 @@ class App {
     }
     ToMusic()
     {
-        this.MenuScreen.hide();
+        this.MenuScreen.Hide();
         let choice=document.querySelectorAll('option');
         let gif=document.querySelector('input');
         var music;
         for(var i of choice)
             if(i.selected)
                 music=i;
-        console.log(gif);
-        console.log(music.dataset);
+        this.MusicScreen.Show(music.dataset,gif.value);
     }
 }

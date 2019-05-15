@@ -1,10 +1,16 @@
-// This class will represent the play button in the MusicScreen. Clicking on
-// it toggles audio playback.
-//
-// See HW4 writeup for more hints and details.
 class PlayButton {
-  constructor() {
-    // TODO(you): Implement the constructor and add fields as necessary.
+  constructor(buttonElement) {
+      this.Change=this.Change.bind(this);
+    this.buttonElement=buttonElement;
+    this.btn=this.buttonElement.querySelector('img');
+    this.btn.addEventListener('click',this.Change);
+    this.CompareSrc=this.btn.src;
   }
-  // TODO(you): Add methods as necessary.
+  Change()
+  {
+      if(this.btn.src == this.CompareSrc)
+        this.btn.src="images/play.png";
+      else
+          this.btn.src="images/pause.png";
+  }
 }
