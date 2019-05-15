@@ -39,6 +39,7 @@ class MenuScreen {
           .catch(err => {
               console.log(err);
           })
+
   }
 
   Hide()

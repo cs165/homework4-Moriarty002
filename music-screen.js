@@ -10,11 +10,12 @@
 class MusicScreen {
   constructor(musicElement) {
       var buttonElement=document.querySelector('#PausePlay');
+      var gifElement=document.querySelector('#player');
       this.Hide=this.Hide.bind(this);
       this.Show=this.Show.bind(this);
       this.musicElement=musicElement;
       this.AudioPlayer=new AudioPlayer();
-      this.GifDisplay=new GifDisplay();
+      this.GifDisplay=new GifDisplay(gifElement);
       this.PlayButton=new PlayButton(buttonElement);
       this.music=null;
       this.gif=null;
@@ -29,8 +30,9 @@ class MusicScreen {
         this.musicElement.classList.remove('inactive');
         this.music=music;
         this.gif=gif;
-        console.log(this.music);
-        console.log(this.gif);
+        //console.log(this.music);
+        //console.log(this.gif);
+        this.GifDisplay.LoadnPlay(this.gif);
     }
   // TODO(you): Add methods as necessary.
 }
