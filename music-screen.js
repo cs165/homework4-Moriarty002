@@ -1,24 +1,22 @@
-// This class will represent the music visualizer screen, i.e. the screen that
-// you see after you select a song.
-//
-// This class should create and own:
-//   - 1 AudioPlayer
-//   - 1 GifDisplay
-//   - 1 PlayButton
-//
-// See HW4 writeup for more hints and details.
 class MusicScreen {
   constructor(musicElement) {
       var buttonElement=document.querySelector('#PausePlay');
       var gifElement=document.querySelector('#player');
+      this.audioPlayer=new AudioPlayer();
       this.Hide=this.Hide.bind(this);
       this.Show=this.Show.bind(this);
+      this._onkick=this._onkick.bind(this);
+      this.Change=this.Change.bind(this);
+
       this.musicElement=musicElement;
-      this.AudioPlayer=new AudioPlayer();
       this.GifDisplay=new GifDisplay(gifElement);
       this.PlayButton=new PlayButton(buttonElement);
       this.music=null;
       this.gif=null;
+
+      this.btn=buttonElement.querySelector('img');
+      this.btn.addEventListener('click',this.Change);
+      this.CompareSrc=this.btn.src;
 
   }
     Hide()
@@ -30,9 +28,30 @@ class MusicScreen {
         this.musicElement.classList.remove('inactive');
         this.music=music;
         this.gif=gif;
-        //console.log(this.music);
+        //console.log(this.music.url);
         //console.log(this.gif);
         this.GifDisplay.LoadnPlay(this.gif);
+        this.audioPlayer.setSong(music.url);
+        this.audioPlayer.setKickCallback(this._onkick);
+        this.audioPlayer.play();
     }
-  // TODO(you): Add methods as necessary.
+    _onkick()
+    {
+        console.log('kick');
+        this.GifDisplay.ChangeBackground();
+    }
+    Change()
+    {
+        if(this.btn.src == this.CompareSrc)
+        {
+            this.btn.src="images/play.png";
+            this.audioPlayer.pause();
+        }
+        else
+        {
+            this.btn.src="images/pause.png";
+            this.audioPlayer.play();
+        }
+
+    }
 }

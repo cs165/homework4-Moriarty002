@@ -3,14 +3,15 @@ class GifDisplay {
     this.gifElement=gifElement;
     this.LoadnPlay=this.LoadnPlay.bind(this);
     this.getGif=this.getGif.bind(this);
+    this.ChangeBackground=this.ChangeBackground.bind(this);
     this.url="";
+    this.storage=null;
+    this.index=1;
   }
   async LoadnPlay(value)
   {
       await this.getGif(value);
-      console.log(this.url);
       this.gifElement.style.backgroundImage="url('"+this.url+"')";
-      console.log("123");
   }
   async getGif(value)
   {
@@ -20,10 +21,18 @@ class GifDisplay {
             return response.json()
         })
         .then(data => {
+            this.storage=data;
           this.url=data.data[0].images.downsized.url;
         })
         .catch(err => {
           console.log(err);
         })
+  }
+  ChangeBackground()
+  {
+      this.url=this.storage.data[this.index].images.downsized.url;
+      this.gifElement.style.backgroundImage="url('"+this.url+"')";
+      this.index++;
+      console.log(this.index);
   }
 }
