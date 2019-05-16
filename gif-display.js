@@ -1,6 +1,7 @@
 class GifDisplay {
   constructor(gifElement) {
     this.gifElement=gifElement;
+    this.parent;
     this.LoadnPlay=this.LoadnPlay.bind(this);
     this.getGif=this.getGif.bind(this);
     this.ChangeBackground=this.ChangeBackground.bind(this);
@@ -8,14 +9,18 @@ class GifDisplay {
     this.storage=null;
     this.index=1;
     this.limit=0;
+    this.flag=0;
     this.back=this.gifElement.querySelector('#back');
     this.front=this.gifElement.querySelector('#front');
       this.front.style.zIndex=3;
       this.back.style.zIndex=2;
   }
-  async LoadnPlay(value)
+  async LoadnPlay(value,MusicScreen)
   {
+      this.parent=MusicScreen;
       await this.getGif(value);
+      if(this.flag == 1)
+          return;
       this.back.style.backgroundImage="url('"+this.url+"')";//0
       this.url=this.storage.data[this.index].images.downsized.url;
       this.front.style.backgroundImage="url('"+this.url+"')";//1
@@ -30,9 +35,12 @@ class GifDisplay {
             return response.json()
         })
         .then(data => {
-            if( data.data.length < 2 )
+            if( data.data.length < 2 || data == null )
             {
                 console.log(data.data.length);
+                this.flag=1;
+                this.parent.GIF_callback();
+                return;
             }
             this.limit=data.data.length;
             this.storage=data;
@@ -40,6 +48,7 @@ class GifDisplay {
         })
         .catch(err => {
           console.log(err);
+          this.parent.GIF_callback();
         })
   }
   ChangeBackground()

@@ -7,6 +7,7 @@ class App {
       this.Submit=this.Submit.bind(this);
       this.CheckKey=this.CheckKey.bind(this);
       this.ToMusic=this.ToMusic.bind(this);
+      this.Music_Callback=this.Music_Callback.bind(this);
 
       var formElement = document.querySelector('form');
       formElement.addEventListener('submit',this.Submit);
@@ -40,7 +41,15 @@ class App {
         for(var i of choice)
             if(i.selected)
                 music=i;
-        this.MusicScreen.Show(music.dataset,gif.value);
+        this.MusicScreen.Show(music.dataset,gif.value,this);
+    }
+    Music_Callback()
+    {
+        this.MusicScreen.Hide();
+        this.MenuScreen.Show();
+        this.MusicScreen.audioPlayer.pause();
+        var errmsg = document.querySelector('#error');
+        errmsg.classList.remove('inactive');
     }
 
 }
