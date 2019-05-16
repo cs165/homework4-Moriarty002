@@ -25,7 +25,7 @@ class GifDisplay {
   async getGif(value)
   {
       var URL="?q="+value+"&api_key=gm2ZMlRhxG54KrlmuhJ8J4O2SREJW4G7&limit=25&rating=g";
-      var myjason=await fetch("http://api.giphy.com/v1/gifs/search"+URL)
+      var myjason=await fetch("https://api.giphy.com/v1/gifs/search"+URL)
         .then(response => {
             return response.json()
         })
