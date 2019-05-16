@@ -7,11 +7,20 @@ class GifDisplay {
     this.url="";
     this.storage=null;
     this.index=1;
+    this.limit=0;
+    this.back=this.gifElement.querySelector('#back');
+    this.front=this.gifElement.querySelector('#front');
+      this.front.style.zIndex=3;
+      this.back.style.zIndex=2;
   }
   async LoadnPlay(value)
   {
       await this.getGif(value);
-      this.gifElement.style.backgroundImage="url('"+this.url+"')";
+      this.back.style.backgroundImage="url('"+this.url+"')";//0
+      this.url=this.storage.data[this.index].images.downsized.url;
+      this.front.style.backgroundImage="url('"+this.url+"')";//1
+      this.index++;//2
+
   }
   async getGif(value)
   {
@@ -21,6 +30,11 @@ class GifDisplay {
             return response.json()
         })
         .then(data => {
+            if( data.data.length < 2 )
+            {
+                console.log(data.data.length);
+            }
+            this.limit=data.data.length;
             this.storage=data;
           this.url=data.data[0].images.downsized.url;
         })
@@ -30,9 +44,23 @@ class GifDisplay {
   }
   ChangeBackground()
   {
-      this.url=this.storage.data[this.index].images.downsized.url;
-      this.gifElement.style.backgroundImage="url('"+this.url+"')";
-      this.index++;
-      console.log(this.index);
+      if(this.front.style.zIndex == 3)
+      {
+          this.back.style.zIndex=3;
+          this.front.style.zIndex=2;
+          this.url=this.storage.data[this.index].images.downsized.url;
+          this.front.style.backgroundImage="url('"+this.url+"')";
+          this.index++;
+          this.index=this.index % this.limit;
+      }
+      else
+      {
+          this.front.style.zIndex=3;
+          this.back.style.zIndex=2;
+          this.url=this.storage.data[this.index].images.downsized.url;
+          this.back.style.backgroundImage="url('"+this.url+"')";
+          this.index++;
+          this.index=this.index % this.limit;
+      }
   }
 }

@@ -32,7 +32,6 @@ class MenuScreen {
                   option.setAttribute("data-title",ITEM.SongList[i].title);
                   option.setAttribute("data-artist",ITEM.SongList[i].artist);
                   select.appendChild(option);
-
               }
 
           })
