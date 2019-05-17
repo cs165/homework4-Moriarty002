@@ -27,7 +27,7 @@ class MenuScreen {
               for (let i of Object.keys(ITEM.SongList))
               {
                   var option = document.createElement("option");
-                  option.innerText=""+i+"";
+                  option.innerText=""+ITEM.SongList[i].title+"";
                   option.setAttribute("data-url",ITEM.SongList[i].songUrl);
                   option.setAttribute("data-title",ITEM.SongList[i].title);
                   option.setAttribute("data-artist",ITEM.SongList[i].artist);
